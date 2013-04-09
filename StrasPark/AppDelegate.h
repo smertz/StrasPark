@@ -8,8 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@class Park, RootViewController, ParkViewController;
 
-@property (strong, nonatomic) UIWindow *window;
+@interface AppDelegate : UIResponder <UIApplicationDelegate, NSXMLParserDelegate> {
+    BOOL modeRefrech;
+}
+
+@property (nonatomic, strong) IBOutlet UIWindow *window;
+@property (nonatomic, strong) IBOutlet UINavigationController *navigationController;
+@property (nonatomic, strong) IBOutlet RootViewController *rootViewController;
+@property (nonatomic, strong) IBOutlet ParkViewController *parkViewController;
 
 @end

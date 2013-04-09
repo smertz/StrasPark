@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0803FD8517119E14002105AF /* ParkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0803FD8317119E14002105AF /* ParkViewController.m */; };
+		0803FD8617119E14002105AF /* ParkView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0803FD8417119E14002105AF /* ParkView.xib */; };
+		082B0C63171211AE00C792E5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 082B0C62171211AE00C792E5 /* CoreLocation.framework */; };
+		082B0C6617121D2700C792E5 /* ParkAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 082B0C6517121D2700C792E5 /* ParkAnnotation.m */; };
 		08335AD2170F673F00F48267 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08335AD1170F673F00F48267 /* UIKit.framework */; };
 		08335AD4170F673F00F48267 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08335AD3170F673F00F48267 /* Foundation.framework */; };
 		08335AD6170F673F00F48267 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08335AD5170F673F00F48267 /* CoreGraphics.framework */; };
@@ -21,6 +25,17 @@
 		08335AF2170F673F00F48267 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08335AD3170F673F00F48267 /* Foundation.framework */; };
 		08335AFA170F673F00F48267 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 08335AF8170F673F00F48267 /* InfoPlist.strings */; };
 		08335AFD170F673F00F48267 /* StrasParkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 08335AFC170F673F00F48267 /* StrasParkTests.m */; };
+		08335B08170F6A5D00F48267 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08335B07170F6A5D00F48267 /* RootViewController.m */; };
+		08335B0B170F6D8000F48267 /* Park.m in Sources */ = {isa = PBXBuildFile; fileRef = 08335B0A170F6D8000F48267 /* Park.m */; };
+		08335B0E170F6FDA00F48267 /* ParseOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 08335B0D170F6FDA00F48267 /* ParseOperation.m */; };
+		08335B12171098E000F48267 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08335B10171098E000F48267 /* MainWindow.xib */; };
+		08335B13171098E000F48267 /* RootView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08335B11171098E000F48267 /* RootView.xib */; };
+		08335B151710AC4B00F48267 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 08335B141710AC4B00F48267 /* Localizable.strings */; };
+		08335B191710C3F100F48267 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08335B181710C3F100F48267 /* iAd.framework */; };
+		08335B1D1710DAF400F48267 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 08335B1C1710DAF300F48267 /* Icon.png */; };
+		08335B1F1710DB3B00F48267 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08335B1E1710DB3B00F48267 /* Icon@2x.png */; };
+		0841C35C17120E54004DA810 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0841C35B17120E54004DA810 /* MapKit.framework */; };
+		08775FF917135F5C002D6F16 /* carto.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08775FF817135F5C002D6F16 /* carto.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +49,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0803FD8217119E14002105AF /* ParkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParkViewController.h; sourceTree = "<group>"; };
+		0803FD8317119E14002105AF /* ParkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParkViewController.m; sourceTree = "<group>"; };
+		0803FD8417119E14002105AF /* ParkView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ParkView.xib; sourceTree = "<group>"; };
+		082B0C62171211AE00C792E5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		082B0C6417121D2700C792E5 /* ParkAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParkAnnotation.h; sourceTree = "<group>"; };
+		082B0C6517121D2700C792E5 /* ParkAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParkAnnotation.m; sourceTree = "<group>"; };
 		08335ACE170F673F00F48267 /* StrasPark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StrasPark.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08335AD1170F673F00F48267 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		08335AD3170F673F00F48267 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -53,6 +74,22 @@
 		08335AF9170F673F00F48267 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		08335AFB170F673F00F48267 /* StrasParkTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StrasParkTests.h; sourceTree = "<group>"; };
 		08335AFC170F673F00F48267 /* StrasParkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StrasParkTests.m; sourceTree = "<group>"; };
+		08335B06170F6A5D00F48267 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		08335B07170F6A5D00F48267 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		08335B09170F6D8000F48267 /* Park.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Park.h; sourceTree = "<group>"; };
+		08335B0A170F6D8000F48267 /* Park.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Park.m; sourceTree = "<group>"; };
+		08335B0C170F6FDA00F48267 /* ParseOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseOperation.h; sourceTree = "<group>"; };
+		08335B0D170F6FDA00F48267 /* ParseOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseOperation.m; sourceTree = "<group>"; };
+		08335B10171098E000F48267 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		08335B11171098E000F48267 /* RootView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RootView.xib; sourceTree = "<group>"; };
+		08335B141710AC4B00F48267 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		08335B161710C3D300F48267 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		08335B171710C3D300F48267 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		08335B181710C3F100F48267 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		08335B1C1710DAF300F48267 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
+		08335B1E1710DB3B00F48267 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
+		0841C35B17120E54004DA810 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		08775FF817135F5C002D6F16 /* carto.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = carto.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +97,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				082B0C63171211AE00C792E5 /* CoreLocation.framework in Frameworks */,
+				0841C35C17120E54004DA810 /* MapKit.framework in Frameworks */,
+				08335B191710C3F100F48267 /* iAd.framework in Frameworks */,
 				08335AD2170F673F00F48267 /* UIKit.framework in Frameworks */,
 				08335AD4170F673F00F48267 /* Foundation.framework in Frameworks */,
 				08335AD6170F673F00F48267 /* CoreGraphics.framework in Frameworks */,
@@ -83,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				08335AD7170F673F00F48267 /* StrasPark */,
+				08335B0F171098C800F48267 /* Resources */,
 				08335AF5170F673F00F48267 /* StrasParkTests */,
 				08335AD0170F673F00F48267 /* Frameworks */,
 				08335ACF170F673F00F48267 /* Products */,
@@ -101,6 +142,9 @@
 		08335AD0170F673F00F48267 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				082B0C62171211AE00C792E5 /* CoreLocation.framework */,
+				0841C35B17120E54004DA810 /* MapKit.framework */,
+				08335B181710C3F100F48267 /* iAd.framework */,
 				08335AD1170F673F00F48267 /* UIKit.framework */,
 				08335AD3170F673F00F48267 /* Foundation.framework */,
 				08335AD5170F673F00F48267 /* CoreGraphics.framework */,
@@ -114,6 +158,16 @@
 			children = (
 				08335AE0170F673F00F48267 /* AppDelegate.h */,
 				08335AE1170F673F00F48267 /* AppDelegate.m */,
+				08335B06170F6A5D00F48267 /* RootViewController.h */,
+				08335B07170F6A5D00F48267 /* RootViewController.m */,
+				0803FD8217119E14002105AF /* ParkViewController.h */,
+				0803FD8317119E14002105AF /* ParkViewController.m */,
+				08335B09170F6D8000F48267 /* Park.h */,
+				08335B0A170F6D8000F48267 /* Park.m */,
+				08335B0C170F6FDA00F48267 /* ParseOperation.h */,
+				08335B0D170F6FDA00F48267 /* ParseOperation.m */,
+				082B0C6417121D2700C792E5 /* ParkAnnotation.h */,
+				082B0C6517121D2700C792E5 /* ParkAnnotation.m */,
 				08335AD8170F673F00F48267 /* Supporting Files */,
 			);
 			path = StrasPark;
@@ -122,6 +176,8 @@
 		08335AD8170F673F00F48267 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				08335B1E1710DB3B00F48267 /* Icon@2x.png */,
+				08335B1C1710DAF300F48267 /* Icon.png */,
 				08335AD9170F673F00F48267 /* StrasPark-Info.plist */,
 				08335ADA170F673F00F48267 /* InfoPlist.strings */,
 				08335ADD170F673F00F48267 /* main.m */,
@@ -150,6 +206,19 @@
 				08335AF8170F673F00F48267 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		08335B0F171098C800F48267 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				08335B141710AC4B00F48267 /* Localizable.strings */,
+				08335B10171098E000F48267 /* MainWindow.xib */,
+				08335B11171098E000F48267 /* RootView.xib */,
+				0803FD8417119E14002105AF /* ParkView.xib */,
+				08775FF817135F5C002D6F16 /* carto.plist */,
+			);
+			name = Resources;
+			path = StrasPark;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -206,6 +275,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				fr,
 			);
 			mainGroup = 08335AC5170F673F00F48267;
 			productRefGroup = 08335ACF170F673F00F48267 /* Products */;
@@ -227,6 +297,13 @@
 				08335AE4170F673F00F48267 /* Default.png in Resources */,
 				08335AE6170F673F00F48267 /* Default@2x.png in Resources */,
 				08335AE8170F673F00F48267 /* Default-568h@2x.png in Resources */,
+				08335B12171098E000F48267 /* MainWindow.xib in Resources */,
+				08335B13171098E000F48267 /* RootView.xib in Resources */,
+				08335B151710AC4B00F48267 /* Localizable.strings in Resources */,
+				08335B1D1710DAF400F48267 /* Icon.png in Resources */,
+				08335B1F1710DB3B00F48267 /* Icon@2x.png in Resources */,
+				0803FD8617119E14002105AF /* ParkView.xib in Resources */,
+				08775FF917135F5C002D6F16 /* carto.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +340,11 @@
 			files = (
 				08335ADE170F673F00F48267 /* main.m in Sources */,
 				08335AE2170F673F00F48267 /* AppDelegate.m in Sources */,
+				08335B08170F6A5D00F48267 /* RootViewController.m in Sources */,
+				08335B0B170F6D8000F48267 /* Park.m in Sources */,
+				08335B0E170F6FDA00F48267 /* ParseOperation.m in Sources */,
+				0803FD8517119E14002105AF /* ParkViewController.m in Sources */,
+				082B0C6617121D2700C792E5 /* ParkAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +371,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				08335ADB170F673F00F48267 /* en */,
+				08335B161710C3D300F48267 /* fr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -297,6 +380,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				08335AF9170F673F00F48267 /* en */,
+				08335B171710C3D300F48267 /* fr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -329,7 +413,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -348,14 +432,16 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Stephan Mertz";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "D3752141-D617-4230-9EC3-4A7EC82693C7";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -365,10 +451,16 @@
 		08335B01170F673F00F48267 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Stephan Mertz (9E6463PX4V)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "StrasPark/StrasPark-Prefix.pch";
 				INFOPLIST_FILE = "StrasPark/StrasPark-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "668A312D-8901-4442-8559-3365E2783960";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -379,7 +471,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "StrasPark/StrasPark-Prefix.pch";
 				INFOPLIST_FILE = "StrasPark/StrasPark-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -437,6 +531,7 @@
 				08335B02170F673F00F48267 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		08335B03170F673F00F48267 /* Build configuration list for PBXNativeTarget "StrasParkTests" */ = {
 			isa = XCConfigurationList;
@@ -445,6 +540,7 @@
 				08335B05170F673F00F48267 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
