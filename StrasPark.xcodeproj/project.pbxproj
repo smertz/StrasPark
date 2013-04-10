@@ -36,6 +36,10 @@
 		08335B1F1710DB3B00F48267 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08335B1E1710DB3B00F48267 /* Icon@2x.png */; };
 		0841C35C17120E54004DA810 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0841C35B17120E54004DA810 /* MapKit.framework */; };
 		08775FF917135F5C002D6F16 /* carto.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08775FF817135F5C002D6F16 /* carto.plist */; };
+		08F5CAA91714ACEE0060B2A6 /* arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 08F5CAA51714ACEE0060B2A6 /* arrow_down.png */; };
+		08F5CAAA1714ACEE0060B2A6 /* arrow_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08F5CAA61714ACEE0060B2A6 /* arrow_down@2x.png */; };
+		08F5CAAB1714ACEE0060B2A6 /* arrow_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 08F5CAA71714ACEE0060B2A6 /* arrow_up.png */; };
+		08F5CAAC1714ACEE0060B2A6 /* arrow_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08F5CAA81714ACEE0060B2A6 /* arrow_up@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +94,10 @@
 		08335B1E1710DB3B00F48267 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		0841C35B17120E54004DA810 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		08775FF817135F5C002D6F16 /* carto.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = carto.plist; sourceTree = "<group>"; };
+		08F5CAA51714ACEE0060B2A6 /* arrow_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_down.png; sourceTree = "<group>"; };
+		08F5CAA61714ACEE0060B2A6 /* arrow_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow_down@2x.png"; sourceTree = "<group>"; };
+		08F5CAA71714ACEE0060B2A6 /* arrow_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_up.png; sourceTree = "<group>"; };
+		08F5CAA81714ACEE0060B2A6 /* arrow_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow_up@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +219,10 @@
 		08335B0F171098C800F48267 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				08F5CAA51714ACEE0060B2A6 /* arrow_down.png */,
+				08F5CAA61714ACEE0060B2A6 /* arrow_down@2x.png */,
+				08F5CAA71714ACEE0060B2A6 /* arrow_up.png */,
+				08F5CAA81714ACEE0060B2A6 /* arrow_up@2x.png */,
 				08335B141710AC4B00F48267 /* Localizable.strings */,
 				08335B10171098E000F48267 /* MainWindow.xib */,
 				08335B11171098E000F48267 /* RootView.xib */,
@@ -304,6 +316,10 @@
 				08335B1F1710DB3B00F48267 /* Icon@2x.png in Resources */,
 				0803FD8617119E14002105AF /* ParkView.xib in Resources */,
 				08775FF917135F5C002D6F16 /* carto.plist in Resources */,
+				08F5CAA91714ACEE0060B2A6 /* arrow_down.png in Resources */,
+				08F5CAAA1714ACEE0060B2A6 /* arrow_down@2x.png in Resources */,
+				08F5CAAB1714ACEE0060B2A6 /* arrow_up.png in Resources */,
+				08F5CAAC1714ACEE0060B2A6 /* arrow_up@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

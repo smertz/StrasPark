@@ -14,6 +14,9 @@
 NSString *kSelectParkNotif = @"SelectParkNotif";
 NSString *kSelectedParkKey = @"SelectedParkKey";
 
+NSString *kSourceStrasbourgDataKey = @"Strasbourg data & OpenData de la Ville de Strasbourg.";
+NSString *kSourceStrasbourgOpenDataKey = @"OpenData de la Ville de Strasbourg.";
+
 @interface RootViewController ()
     @property (nonatomic, strong) NSDate *refreshDate;
 @end
@@ -150,9 +153,10 @@ NSString *kSelectedParkKey = @"SelectedParkKey";
 #pragma mark -
 #pragma mark KVO support
 
-- (void)insertParks:(NSArray *)parks
+- (void)insertParks:(NSArray *)parks source:(NSString *)sourceKey
 {
     [self willChangeValueForKey:@"parkList"];
+    self.sourceKey = sourceKey;
     [self.parkList addObjectsFromArray:parks];
     [self.parkList sortUsingComparator:(NSComparator)^(Park *obj1, Park *obj2){
         NSString *nom1 = [obj1 nom];
@@ -161,9 +165,10 @@ NSString *kSelectedParkKey = @"SelectedParkKey";
     [self didChangeValueForKey:@"parkList"];
 }
 
-- (void)refreshParks:(NSDate *)refreshDate
+- (void)refreshParks:(NSDate *)refreshDate source:(NSString *)sourceKey
 {
     self.refreshDate = refreshDate;
+    self.sourceKey = sourceKey;
     [self.tableView reloadData];
     [self.refreshControl endRefreshing];
 }
@@ -189,12 +194,7 @@ NSString *kSelectedParkKey = @"SelectedParkKey";
 }
 
 #pragma mark - Table view data source
-/*
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 0;
-}
-*/
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [self.parkList count] + 1;
@@ -230,7 +230,12 @@ NSString *kSelectedParkKey = @"SelectedParkKey";
             dateLabel = (UILabel *)[cell.contentView viewWithTag:kDateLabelTag];
         }
         
-        licenceLabel.text = @"Sources : OpenData de la Ville de Strasbourg.";
+        if (self.sourceKey != nil) {
+            licenceLabel.text = [NSString stringWithFormat:@"Sources : %@", self.sourceKey];
+        } else {
+            licenceLabel.text = @"Chargement en cours...";
+        }
+        
         if (self.refreshDate != nil) {
             dateLabel.text = [NSString stringWithFormat:@"Dernier rafraîchissement : %@", [self.dateFormatter stringFromDate:self.refreshDate]];
         }
@@ -240,6 +245,7 @@ NSString *kSelectedParkKey = @"SelectedParkKey";
         static NSUInteger const kPlaceLabelTag = 3;
         static NSUInteger const kTotalLabelTag = 4;
         static NSUInteger const kDeltaLabelTag = 5;
+        static NSUInteger const kDeltaImageTag = 6;
         
         //UIColor *color = (indexPath.row % 2 == 0) ? [UIColor lightGrayColor] : [UIColor whiteColor];
         
@@ -248,6 +254,7 @@ NSString *kSelectedParkKey = @"SelectedParkKey";
         UILabel *placeLabel = nil;
         UILabel *totalLabel = nil;
         UILabel *deltaLabel = nil;
+        UIImageView *deltaImage;
         
         static NSString *kParkCellID = @"ParkCellID";
         cell = [tableView dequeueReusableCellWithIdentifier:kParkCellID];
@@ -256,19 +263,19 @@ NSString *kSelectedParkKey = @"SelectedParkKey";
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kParkCellID];
             
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 3, 175, 20)];
+            locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 180, 20)];
             locationLabel.tag = kLocationLabelTag;
             locationLabel.font = [UIFont fontWithName:@"Helvetica" size:16];
             [cell.contentView addSubview:locationLabel];
             
-            placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(180, 3, 50, 20)];
+            placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(180, 5.5, 50, 20)];
             placeLabel.tag = kPlaceLabelTag;
             placeLabel.font = [UIFont fontWithName:@"Helvetica" size:18];
             placeLabel.textAlignment = NSTextAlignmentRight;
             placeLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
             [cell.contentView addSubview:placeLabel];
             
-            totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(235, 5, 60, 20)];
+            totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(235, 7.5, 60, 20)];
             totalLabel.tag = kTotalLabelTag;
             totalLabel.font = [UIFont fontWithName:@"Helvetica" size:10];
             totalLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
@@ -278,15 +285,15 @@ NSString *kSelectedParkKey = @"SelectedParkKey";
             deltaLabel.tag = kDeltaLabelTag;
             deltaLabel.font = [UIFont fontWithName:@"Symbol" size:18];
             deltaLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-            [cell.contentView addSubview:deltaLabel];
+            //[cell.contentView addSubview:deltaLabel];
 
-            /*deltaImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"5.0.png"]];
-             CGRect imageFrame = deltaImage.frame;
-             imageFrame.origin = CGPointMake(180, 2);
-             deltaImage.frame = imageFrame;
-             deltaImage.tag = kDeltaImageTag;
-             deltaImage.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-             [cell.contentView addSubview:deltaImage];*/
+            deltaImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_down.png"]];
+            CGRect imageFrame = deltaImage.frame;
+            imageFrame.origin = CGPointMake(290, 4);
+            deltaImage.frame = imageFrame;
+            deltaImage.tag = kDeltaImageTag;
+            deltaImage.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+            [cell.contentView addSubview:deltaImage];
         } else {
             // A reusable cell was available, so we just need to get a reference to the subviews
             // using their tags.
@@ -295,7 +302,7 @@ NSString *kSelectedParkKey = @"SelectedParkKey";
             placeLabel = (UILabel *)[cell.contentView viewWithTag:kPlaceLabelTag];
             totalLabel = (UILabel *)[cell.contentView viewWithTag:kTotalLabelTag];
             deltaLabel = (UILabel *)[cell.contentView viewWithTag:kDeltaLabelTag];
-            //deltaImage = (UIImageView *)[cell.contentView viewWithTag:kDeltaImageTag];
+            deltaImage = (UIImageView *)[cell.contentView viewWithTag:kDeltaImageTag];
         }
         
         // Get the specific park for this row.
@@ -304,11 +311,13 @@ NSString *kSelectedParkKey = @"SelectedParkKey";
         // Set the relevant data for each subview in the cell.
         locationLabel.text = park.nom;
         if ([park.infos rangeOfString:@"FERME"].length != 0) {
-            totalLabel.text = park.infos;
+            totalLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
+            totalLabel.text = @"FERMÉ";
             totalLabel.textColor = [UIColor redColor];
             placeLabel.text = @"";
             deltaLabel.text = @"";
         } else {
+            totalLabel.font = [UIFont fontWithName:@"Helvetica" size:10];
             if (park.previousPlace != 0) {
                 if (park.previousPlace > park.place) {
                     deltaLabel.textColor = [UIColor redColor];
@@ -332,11 +341,23 @@ NSString *kSelectedParkKey = @"SelectedParkKey";
                 totalLabel.text = [NSString stringWithFormat:@"libres / %i", park.capacity];
             }
         }
+        
+        deltaImage.image = [self imageForPark:park];
     }
     
-    //deltaImage.image = [self imageForMagnitude:park.magnitude];
-    
 	return cell;
+}
+
+- (UIImage *)imageForPark:(Park *)park {
+    if (park.previousPlace != 0) {
+        if (park.previousPlace > park.place) {
+            return [UIImage imageNamed:@"arrow_down.png"];
+        } else if (park.previousPlace < park.place) {
+            return [UIImage imageNamed:@"arrow_up.png"];
+        }
+    }
+
+	return nil;
 }
 
 /*

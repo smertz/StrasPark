@@ -51,7 +51,7 @@ static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
     //
     
     modeRefrech = NO;
-    NSURLRequest *parkURLRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:configURLString]];
+    NSURLRequest *parkURLRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:strassdataURLString]];
     self.parkFeedConnection = [[NSURLConnection alloc] initWithRequest:parkURLRequest delegate:self];
     
     // Test the validity of the connection object. The most likely reason for the connection object
@@ -107,7 +107,8 @@ static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     if ([[self.rootViewController parkList] count] != 0) {
-        NSURLRequest *parkURLRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:dataURLString]];
+        modeRefrech = YES;
+        NSURLRequest *parkURLRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:strassdataURLString]];
         self.parkFeedConnection = [[NSURLConnection alloc] initWithRequest:parkURLRequest delegate:self];
     }
 }
@@ -119,7 +120,7 @@ static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
 
 - (void)refreshControlRequest:(id)sender
 {
-    NSURLRequest *parkURLRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:dataURLString]];
+    NSURLRequest *parkURLRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:strassdataURLString]];
 
     modeRefrech = YES;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -138,12 +139,22 @@ static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
         ) {
         self.parkData = [NSMutableData data];
     } else {
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:
-                                  NSLocalizedString(@"HTTP Error",
-                                                    @"Error message displayed when receving a connection error.")
-                                                             forKey:NSLocalizedDescriptionKey];
-        NSError *error = [NSError errorWithDomain:@"HTTP" code:[httpResponse statusCode] userInfo:userInfo];
-        [self handleError:error];
+        if ([[[[connection originalRequest] URL] absoluteString] isEqualToString:strassdataURLString]) {
+            if (modeRefrech) {
+                NSURLRequest *parkURLRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:dataURLString]];
+                self.parkFeedConnection = [[NSURLConnection alloc] initWithRequest:parkURLRequest delegate:self];
+            } else {
+                NSURLRequest *parkURLRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:configURLString]];
+                self.parkFeedConnection = [[NSURLConnection alloc] initWithRequest:parkURLRequest delegate:self];
+            }
+        } else {
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:
+                                      NSLocalizedString(@"HTTP Error",
+                                                        @"Error message displayed when receving a connection error.")
+                                                                 forKey:NSLocalizedDescriptionKey];
+            NSError *error = [NSError errorWithDomain:@"HTTP" code:[httpResponse statusCode] userInfo:userInfo];
+            [self handleError:error];
+        }
     }
 }
 
@@ -165,9 +176,21 @@ static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
                                                      userInfo:userInfo];
         [self handleError:noConnectionError];
     } else {
-        // otherwise handle the error generically
-        [self handleError:error];
+        if ([[[[connection originalRequest] URL] absoluteString] isEqualToString:strassdataURLString]) {
+            if (modeRefrech) {
+                NSURLRequest *parkURLRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:dataURLString]];
+                self.parkFeedConnection = [[NSURLConnection alloc] initWithRequest:parkURLRequest delegate:self];
+            } else {
+                NSURLRequest *parkURLRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:configURLString]];
+                self.parkFeedConnection = [[NSURLConnection alloc] initWithRequest:parkURLRequest delegate:self];
+            }
+            
+            return;
+        } else {
+            [self handleError:error];
+        }
     }
+    
     self.parkFeedConnection = nil;
     if (modeRefrech) {
         [self.rootViewController.refreshControl endRefreshing];
@@ -221,10 +244,10 @@ static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
             [parkList addObject:park];
         }
         
-        if (modeRefrech == NO) {
-            [self.rootViewController insertParks:parkList];
+        if (modeRefrech == NO || self.rootViewController.parkList.count == 0) {
+            [self.rootViewController insertParks:parkList source:kSourceStrasbourgDataKey];
         } else {
-            [self.rootViewController refreshParks:[NSDate date]];
+            [self.rootViewController refreshParks:[NSDate date] source:kSourceStrasbourgDataKey];
         }
     } else {
         ParseOperation *parseOperation = [[ParseOperation alloc] initWithData:self.parkData andParks:self.rootViewController.parkList];
@@ -269,7 +292,7 @@ static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
 - (void)refreshParks:(NSNotification *)notif {
     assert([NSThread isMainThread]);
     
-    [self.rootViewController refreshParks:[[notif userInfo] valueForKey:kRefreshDateKey]];
+    [self.rootViewController refreshParks:[[notif userInfo] valueForKey:kRefreshDateKey] source:kSourceStrasbourgOpenDataKey];
 }
 
 // Our NSNotification callback from the running NSOperation when a parsing error has occurred
@@ -285,9 +308,8 @@ static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
 // The batch size is set via the kSizeOfParkBatch constant.
 //
 - (void)addParksToList:(NSArray *)parks {
-    
     // insert the parks into our rootViewController's data source (for KVO purposes)
-    [self.rootViewController insertParks:parks];
+    [self.rootViewController insertParks:parks source:kSourceStrasbourgOpenDataKey];
 }
 
 - (void)selectPark:(NSNotification *)notif {
