@@ -19,4 +19,6 @@
 @property (nonatomic, strong) IBOutlet RootViewController *rootViewController;
 @property (nonatomic, strong) IBOutlet ParkViewController *parkViewController;
 
+@property (nonatomic, strong) NSString *effectiveDataURL;
+
 @end

@@ -13,8 +13,13 @@
 
 @interface ParkViewController : UIViewController
 
-@property(nonatomic, strong) Park *park;
+@property (nonatomic, strong) IBOutlet UILabel *parkName;
+@property (nonatomic, strong) IBOutlet UILabel *parkPlace;
+@property (nonatomic, strong) IBOutlet UIImageView *parkUpDown;
 @property(nonatomic, strong) IBOutlet MKMapView *mapView;
+@property(nonatomic, strong) IBOutlet UIButton *routeButton;
+
+@property(nonatomic, strong) Park *park;
 
 - (IBAction) directionToPark: (id)sender;
 

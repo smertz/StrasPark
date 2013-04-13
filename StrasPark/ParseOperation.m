@@ -112,7 +112,7 @@ NSString *kParksMsgErrorKey = @"ParksMsgErrorKey";
     self.currentParseBatch = nil;
     self.currentParkObject = nil;
     self.currentParsedCharacterData = nil;
-    self.refreshDate = nil;
+    //self.refreshDate = nil;
 }
 
 
@@ -122,7 +122,7 @@ NSString *kParksMsgErrorKey = @"ParksMsgErrorKey";
 // Limit the number of parsed Parks to 50
 // (a given day may have more than 50 Parks around the world, so we only take the first 50)
 //
-static const const NSUInteger kMaximumNumberOfParksToParse = 50;
+static const NSUInteger kMaximumNumberOfParksToParse = 50;
 
 // When an Park object has been fully constructed, it must be passed to the main thread and
 // the table view in RootViewController must be reloaded to display it. It is not efficient to do
@@ -156,6 +156,7 @@ static NSString * const kPElementName = @"p";
         didAbortParsing = YES;
         [parser abortParsing];
     }
+    
     if ([elementName isEqualToString:kDataElementName]) {
         NSString *dateStr = [attributeDict valueForKey:@"ts"];
         
@@ -172,11 +173,24 @@ static NSString * const kPElementName = @"p";
         
         Park *park = [self findParkForIdent:ident];
         
-        if (park == nil && [elementName isEqualToString:kPRKElementName]) {
+        if (park == nil && [elementName isEqualToString:kPRKElementName] && [attributeDict valueForKey:@"Nom"] != nil) {
             park = [[Park alloc] init];
             park.ident = ident;
             park.nom = [attributeDict valueForKey:@"Nom"];
             park.nomCourt = [attributeDict valueForKey:@"NomCourt"];
+            park.distance = -1;
+            park.previousPlace = -1;
+
+            NSDictionary *coords = [self.cartoDict objectForKey:ident];
+            NSScanner *scanner = [NSScanner scannerWithString:[coords valueForKey:@"latitude"]];
+            double latitude, longitude;
+            
+            [scanner scanDouble:&latitude];
+            scanner = [NSScanner scannerWithString:[coords valueForKey:@"longitude"]];
+            [scanner scanDouble:&longitude];
+            park.latitude = latitude;
+            park.longitude = longitude;
+            
         } else if (park != nil && [elementName isEqualToString:kPElementName]) {
             NSScanner *scanner = [NSScanner scannerWithString:[attributeDict valueForKey:@"x"]];
             double latitude, longitude;
@@ -187,20 +201,10 @@ static NSString * const kPElementName = @"p";
             park.longitude = longitude;
             park.latitude = latitude;
         } else if (park != nil) {
-            NSDictionary *coords = [self.cartoDict objectForKey:ident];
-            NSScanner *scanner = [NSScanner scannerWithString:[coords valueForKey:@"latitude"]];
-            double latitude, longitude;
-            
-            [scanner scanDouble:&latitude];
-            scanner = [NSScanner scannerWithString:[coords valueForKey:@"longitude"]];
-            [scanner scanDouble:&longitude];
-            park.latitude = latitude;
-            park.longitude = longitude;
-
             if (park.place == 0) {
                 park.place = [[attributeDict valueForKey:@"Libre"] integerValue];
             } else {
-                if (park.previousPlace == 0) {
+                if (park.previousPlace == -1) {
                     park.previousPlace = park.place;
                 } else {
                     park.previousPlace = (park.previousPlace + park.place) / 2;
@@ -222,7 +226,7 @@ static NSString * const kPElementName = @"p";
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qName {
     if ([elementName isEqualToString:kPRKElementName]) {
-        if ([self.parks count] == 0) {
+        if ([self.parks count] == 0 && self.currentParkObject != nil) {
             [self.currentParseBatch addObject:self.currentParkObject];
             parsedParksCounter++;
             if ([self.currentParseBatch count] >= kMaximumNumberOfParksToParse) {

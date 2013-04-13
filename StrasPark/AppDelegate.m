@@ -33,6 +33,7 @@
 
 @implementation AppDelegate
 
+static NSString *cybersimpleURLString = @"http://www.cybersimple.com/parkings.plist";
 static NSString *strassdataURLString = @"http://parkings.api.strasbourg-data.fr/parkings";
 static NSString *configURLString = @"http://jadyn.strasbourg.eu/jadyn/config.xml";
 static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
@@ -51,7 +52,8 @@ static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
     //
     
     modeRefrech = NO;
-    NSURLRequest *parkURLRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:strassdataURLString]];
+    self.effectiveDataURL = nil;
+    NSURLRequest *parkURLRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:cybersimpleURLString]];
     self.parkFeedConnection = [[NSURLConnection alloc] initWithRequest:parkURLRequest delegate:self];
     
     // Test the validity of the connection object. The most likely reason for the connection object
@@ -83,7 +85,15 @@ static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
                                              selector:@selector(selectPark:)
                                                  name:kSelectParkNotif
                                                object:nil];
-    
+    if ([CLLocationManager locationServicesEnabled] == NO) {
+        UIAlertView *servicesDisabledAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Service de localisation désactivé", @"Service de localisation désactivé")
+                                                                        message:@"Vous avez actuellement tous les services de localisation pour ce dispositif désactivé. Si vous continuez, vous serez invité à confirmer si des services de localisation doivent être permis à nouveau."
+                                                                       delegate:nil
+                                                              cancelButtonTitle:@"OK"
+                                                              otherButtonTitles:nil];
+        [servicesDisabledAlert show];
+    }
+
     return YES;
 }
 
@@ -91,12 +101,14 @@ static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    self.rootViewController.adBannerViewIsVisible = NO;
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(refreshControlRequest:) object:nil];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -107,9 +119,8 @@ static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     if ([[self.rootViewController parkList] count] != 0) {
-        modeRefrech = YES;
-        NSURLRequest *parkURLRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:strassdataURLString]];
-        self.parkFeedConnection = [[NSURLConnection alloc] initWithRequest:parkURLRequest delegate:self];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(refreshControlRequest:) object:nil];
+        [self performSelector:@selector(refreshControlRequest:) withObject:nil afterDelay:1];
     }
 }
 
@@ -118,22 +129,13 @@ static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (void)refreshControlRequest:(id)sender
-{
-    NSURLRequest *parkURLRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:strassdataURLString]];
-
-    modeRefrech = YES;
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    self.parkFeedConnection = [[NSURLConnection alloc] initWithRequest:parkURLRequest delegate:self];
-}
-
-#pragma mark -
-#pragma mark NSURLConnection delegate methods
+#pragma mark - NSURLConnection delegate methods
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     if ((([httpResponse statusCode]/100) == 2)
         && ([[response MIMEType] isEqual:@"text/xml"]
+            || [[response MIMEType] isEqual:@"text/plain"]
             || [[response MIMEType] isEqual:@"application/xml"]
             || [[response MIMEType] isEqual:@"application/json"])
         ) {
@@ -167,9 +169,9 @@ static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
     if ([error code] == kCFURLErrorNotConnectedToInternet) {
         // if we can identify the error, we can present a more precise message to the user.
         NSDictionary *userInfo =
-        [NSDictionary dictionaryWithObject:
-         NSLocalizedString(@"No Connection Error",
-                           @"Error message displayed when not connected to the Internet.")
+            [NSDictionary dictionaryWithObject:
+             NSLocalizedString(@"No Connection Error",
+                               @"Error message displayed when not connected to the Internet.")
                                     forKey:NSLocalizedDescriptionKey];
         NSError *noConnectionError = [NSError errorWithDomain:NSCocoaErrorDomain
                                                          code:kCFURLErrorNotConnectedToInternet
@@ -185,6 +187,7 @@ static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
                 self.parkFeedConnection = [[NSURLConnection alloc] initWithRequest:parkURLRequest delegate:self];
             }
             
+            NSAssert(self.parkFeedConnection != nil, @"Failure to create URL connection.");
             return;
         } else {
             [self handleError:error];
@@ -203,12 +206,22 @@ static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
     
     if (self.parkData == nil) return;
     
-    // Spawn an NSOperation to parse the park data so that the UI is not blocked while the
-    // application parses the XML data.
-    //
-    // IMPORTANT! - Don't access or affect UIKit objects on secondary threads.
-    //
-    if ([[[[connection originalRequest] URL] absoluteString] isEqualToString:strassdataURLString]) {
+    if ([[[[connection originalRequest] URL] absoluteString] isEqualToString:cybersimpleURLString]) {
+        NSError *plistParsingError = nil;
+        NSDictionary *configDict = [NSPropertyListSerialization propertyListWithData:self.parkData
+                                                                             options:NSPropertyListImmutable
+                                                                              format:nil
+                                                                               error:&plistParsingError];
+        
+        self.rootViewController.useIAD = [[configDict objectForKey:@"useIAD"] boolValue];
+        if ([configDict objectForKey:@"url"] != nil) {
+            self.effectiveDataURL = [configDict objectForKey:@"url"];
+
+            NSURLRequest *parkURLRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:self.effectiveDataURL]];
+            self.parkFeedConnection = [[NSURLConnection alloc] initWithRequest:parkURLRequest delegate:self];
+            NSAssert(self.parkFeedConnection != nil, @"Failure to create URL connection.");
+        }
+    } else if ([[[[connection originalRequest] URL] absoluteString] isEqualToString:strassdataURLString]) {
         NSError *jsonParsingError = nil;
         NSArray *parks = [NSJSONSerialization JSONObjectWithData:self.parkData options:0 error:&jsonParsingError];
         NSMutableArray *parkList = [NSMutableArray new];
@@ -249,9 +262,14 @@ static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
         } else {
             [self.rootViewController refreshParks:[NSDate date] source:kSourceStrasbourgDataKey];
         }
+
+        [self performSelector:@selector(refreshControlRequest:) withObject:nil afterDelay:60];
     } else {
         ParseOperation *parseOperation = [[ParseOperation alloc] initWithData:self.parkData andParks:self.rootViewController.parkList];
         [self.parseQueue addOperation:parseOperation];
+        if ([[[[connection originalRequest] URL] absoluteString] isEqualToString:dataURLString]) {
+            [self performSelector:@selector(refreshControlRequest:) withObject:nil afterDelay:60];
+        }
     }
     
     // parkData will be retained by the NSOperation until it has finished executing,
@@ -260,6 +278,30 @@ static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
     if ([[[[connection originalRequest] URL] absoluteString] isEqualToString:configURLString]) {
         NSURLRequest *parkURLRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:dataURLString]];
         self.parkFeedConnection = [[NSURLConnection alloc] initWithRequest:parkURLRequest delegate:self];
+        NSAssert(self.parkFeedConnection != nil, @"Failure to create URL connection.");
+    }
+}
+
+#pragma mark -
+
+- (void)refreshControlRequest:(id)sender
+{
+    if (self.effectiveDataURL != nil) {
+        NSURLRequest *parkURLRequest = nil;
+        
+        if ([self.effectiveDataURL isEqualToString:configURLString]) {
+            parkURLRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:dataURLString]];
+        } else {
+            parkURLRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:self.effectiveDataURL]];
+        }
+        
+        modeRefrech = YES;
+        self.parkFeedConnection = [[NSURLConnection alloc] initWithRequest:parkURLRequest delegate:self];
+        NSAssert(self.parkFeedConnection != nil, @"Failure to create URL connection.");
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(refreshControlRequest:) object:nil];
+        [self performSelector:@selector(refreshControlRequest:) withObject:nil afterDelay:60];
+        NSLog(@"refreshControlRequest");
     }
 }
 
@@ -278,6 +320,7 @@ static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
                               delegate:nil
                      cancelButtonTitle:@"OK"
                      otherButtonTitles:nil];
+    [self.rootViewController.refreshControl endRefreshing];
     [alertView show];
 }
 

@@ -13,10 +13,12 @@
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<string>IBProxyObject</string>
+			<string>IBUIBarButtonItem</string>
 			<string>IBUICustomObject</string>
 			<string>IBUINavigationBar</string>
 			<string>IBUINavigationController</string>
 			<string>IBUINavigationItem</string>
+			<string>IBUIToolbar</string>
 			<string>IBUIViewController</string>
 			<string>IBUIWindow</string>
 		</object>
@@ -50,7 +52,6 @@
 				<object class="NSPSMatrix" key="NSFrameMatrix"/>
 				<string key="NSFrameSize">{320, 568}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
@@ -86,6 +87,7 @@
 					<int key="IBUIInterfaceOrientation">1</int>
 					<int key="interfaceOrientation">1</int>
 				</object>
+				<reference key="IBUISimulatedDestinationMetrics" ref="958185442"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<bool key="IBUIHorizontal">NO</bool>
 				<object class="IBUINavigationBar" key="IBUINavigationBar" id="784693319">
@@ -97,16 +99,38 @@
 					<bool key="IBUIMultipleTouchEnabled">YES</bool>
 					<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				</object>
+				<object class="IBUIToolbar" key="IBUIToolbar" id="452819369">
+					<reference key="NSNextResponder"/>
+					<int key="NSvFlags">256</int>
+					<string key="NSFrame">{{0, 524}, {320, 44}}</string>
+					<reference key="NSSuperview"/>
+					<reference key="NSNextKeyView"/>
+					<bool key="IBUIOpaque">NO</bool>
+					<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+					<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+				</object>
 				<object class="NSMutableArray" key="IBUIViewControllers">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="IBUIViewController" id="429201030">
+						<object class="NSArray" key="IBUIToolbarItems">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBUIBarButtonItem" id="524986233">
+								<bool key="IBUIEnabled">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<int key="IBUIStyle">1</int>
+							</object>
+							<object class="IBUIBarButtonItem" id="240803501">
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<int key="IBUISystemItemIdentifier">5</int>
+							</object>
+						</object>
 						<object class="IBUINavigationItem" key="IBUINavigationItem" id="534811334">
-							<reference key="IBUINavigationBar"/>
 							<string key="IBUITitle">Parkings de Strasbourg</string>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
 						<reference key="IBUIParentViewController" ref="369423812"/>
 						<string key="IBUINibName">RootView</string>
+						<object class="IBUISimulatedToolbarMetrics" key="IBUISimulatedBottomBarMetrics"/>
 						<object class="IBUISimulatedOrientationMetrics" key="IBUISimulatedOrientationMetrics">
 							<int key="IBUIInterfaceOrientation">1</int>
 							<int key="interfaceOrientation">1</int>
@@ -115,10 +139,10 @@
 						<bool key="IBUIHorizontal">NO</bool>
 					</object>
 				</object>
+				<bool key="IBUIToolbarHidden">NO</bool>
 			</object>
 			<object class="IBUIViewController" id="290269948">
 				<object class="IBUINavigationItem" key="IBUINavigationItem" id="18903762">
-					<reference key="IBUINavigationBar"/>
 					<string key="IBUITitle">Title</string>
 					<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				</object>
@@ -132,6 +156,7 @@
 					<int key="interfaceOrientation">1</int>
 				</object>
 				<reference key="IBUISimulatedDestinationMetrics" ref="958185442"/>
+				<bool key="IBUIHidesBottomBarWhenPushed">YES</bool>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<bool key="IBUIHorizontal">NO</bool>
 			</object>
@@ -179,6 +204,22 @@
 					</object>
 					<int key="connectionID">40</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">parksNearMeButton</string>
+						<reference key="source" ref="429201030"/>
+						<reference key="destination" ref="524986233"/>
+					</object>
+					<int key="connectionID">53</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">toogleButtonAction:</string>
+						<reference key="source" ref="524986233"/>
+						<reference key="destination" ref="429201030"/>
+					</object>
+					<int key="connectionID">58</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -222,6 +263,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="429201030"/>
 							<reference ref="784693319"/>
+							<reference ref="452819369"/>
 						</object>
 						<reference key="parent" ref="957960031"/>
 					</object>
@@ -236,6 +278,8 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="534811334"/>
+							<reference ref="524986233"/>
+							<reference ref="240803501"/>
 						</object>
 						<reference key="parent" ref="369423812"/>
 					</object>
@@ -261,6 +305,21 @@
 						<reference key="object" ref="18903762"/>
 						<reference key="parent" ref="290269948"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">49</int>
+						<reference key="object" ref="452819369"/>
+						<reference key="parent" ref="369423812"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">50</int>
+						<reference key="object" ref="524986233"/>
+						<reference key="parent" ref="429201030"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">56</int>
+						<reference key="object" ref="240803501"/>
+						<reference key="parent" ref="429201030"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -282,6 +341,9 @@
 					<string>38.CustomClassName</string>
 					<string>38.IBPluginDependency</string>
 					<string>39.IBPluginDependency</string>
+					<string>49.IBPluginDependency</string>
+					<string>50.IBPluginDependency</string>
+					<string>56.IBPluginDependency</string>
 					<string>9.IBPluginDependency</string>
 				</object>
 				<object class="NSArray" key="dict.values">
@@ -306,6 +368,9 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -320,105 +385,9 @@
 				<reference key="dict.values" ref="957960031"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">48</int>
+			<int key="maxID">62</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<bool key="EncodedWithXMLCoder">YES</bool>
-				<object class="IBPartialClassDescription">
-					<string key="className">AppDelegate</string>
-					<string key="superclassName">UIResponder</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>navigationController</string>
-							<string>parkViewController</string>
-							<string>rootViewController</string>
-							<string>window</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>UINavigationController</string>
-							<string>ParkViewController</string>
-							<string>RootViewController</string>
-							<string>UIWindow</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>navigationController</string>
-							<string>parkViewController</string>
-							<string>rootViewController</string>
-							<string>window</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">navigationController</string>
-								<string key="candidateClassName">UINavigationController</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">parkViewController</string>
-								<string key="candidateClassName">ParkViewController</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">rootViewController</string>
-								<string key="candidateClassName">RootViewController</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">window</string>
-								<string key="candidateClassName">UIWindow</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/AppDelegate.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">ParkViewController</string>
-					<string key="superclassName">UIViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">directionToPark:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">directionToPark:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">directionToPark:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">mapView</string>
-						<string key="NS.object.0">MKMapView</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">mapView</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">mapView</string>
-							<string key="candidateClassName">MKMapView</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/ParkViewController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">RootViewController</string>
-					<string key="superclassName">UITableViewController</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/RootViewController.h</string>
-					</object>
-				</object>
-			</object>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">

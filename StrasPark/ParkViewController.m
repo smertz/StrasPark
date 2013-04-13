@@ -10,6 +10,7 @@
 
 #import "ParkViewController.h"
 #import "ParkAnnotation.h"
+#import "ParseOperation.h"
 
 NSString* AnnotationIdentifier = @"AnnotationIdentifier";
 
@@ -23,7 +24,6 @@ NSString* AnnotationIdentifier = @"AnnotationIdentifier";
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -31,14 +31,54 @@ NSString* AnnotationIdentifier = @"AnnotationIdentifier";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.routeButton setTitle:NSLocalizedString(@"Itinéraire vers ce parking", @"") forState:UIControlStateNormal];
     self.mapView.showsUserLocation = YES;
-    //[self.mapView setCenterCoordinate:CLLocationCoordinate2DMake(self.park.latitude, self.park.longitude) animated:YES];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refreshPark:)
+                                                 name:kRefreshParksNotif
+                                               object:nil];
+}
+
+- (UIImage *)imageForPark:(Park *)park {
+    if (park.previousPlace != -1) {
+        if (park.previousPlace > park.place) {
+            return [UIImage imageNamed:@"arrow_down.png"];
+        } else if (park.previousPlace < park.place) {
+            return [UIImage imageNamed:@"arrow_up.png"];
+        }
+    }
+    
+	return nil;
+}
+
+- (void)refreshDisplay
+{
+    self.parkName.text = self.park.nom;
+    if ([self.park.infos rangeOfString:@"FERME"].length != 0) {
+        self.parkPlace.text = NSLocalizedString(@"FERMÉ", @"");
+        self.parkPlace.textColor = [UIColor redColor];
+        self.parkUpDown.image = nil;
+    } else {
+        self.parkPlace.textColor = [UIColor blackColor];
+        if (self.park.place <= 1) {
+            self.parkPlace.text = [NSString stringWithFormat:NSLocalizedString(@"%i place libre / %i", @""), self.park.place , self.park.capacity];
+        } else {
+            self.parkPlace.text = [NSString stringWithFormat:NSLocalizedString(@"%i places libres / %i", @""), self.park.place, self.park.capacity];
+        }
+
+        self.parkUpDown.image = [self imageForPark:self.park];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self refreshDisplay];
+    [self.mapView setShowsUserLocation:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     MKCoordinateRegion newRegion;
-    
     newRegion.center = CLLocationCoordinate2DMake(self.park.latitude, self.park.longitude);
     newRegion.span.latitudeDelta = 0.01;
     newRegion.span.longitudeDelta = 0.01;
@@ -49,6 +89,7 @@ NSString* AnnotationIdentifier = @"AnnotationIdentifier";
 - (void)viewDidDisappear:(BOOL)animated
 {
     [self.mapView removeAnnotations:self.mapView.annotations];
+    [self.mapView setShowsUserLocation:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,6 +107,11 @@ NSString* AnnotationIdentifier = @"AnnotationIdentifier";
     //[items addObject:[MKMapItem mapItemForCurrentLocation]];
     [MKMapItem openMapsWithItems:items
                    launchOptions:[NSDictionary dictionaryWithObjectsAndKeys:MKLaunchOptionsDirectionsModeKey, MKLaunchOptionsDirectionsModeDriving, nil]];
+}
+
+- (void)refreshPark:(NSNotification *)notif {
+    assert([NSThread isMainThread]);
+    [self refreshDisplay];
 }
 
 #pragma mark -

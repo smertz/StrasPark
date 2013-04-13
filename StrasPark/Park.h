@@ -20,5 +20,6 @@
 @property (nonatomic, assign) int etat;
 @property (nonatomic, assign) double latitude;
 @property (nonatomic, assign) double longitude;
+@property (nonatomic, assign) double distance;
 
 @end
