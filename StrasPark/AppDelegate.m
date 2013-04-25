@@ -289,7 +289,7 @@ static NSString *dataURLString = @"http://jadyn.strasbourg.eu/jadyn/dynn.xml";
     if (self.effectiveDataURL != nil) {
         NSURLRequest *parkURLRequest = nil;
         
-        if ([self.effectiveDataURL isEqualToString:configURLString]) {
+        if ([self.effectiveDataURL isEqualToString:configURLString] && self.rootViewController.parkList.count != 0) {
             parkURLRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:dataURLString]];
         } else {
             parkURLRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:self.effectiveDataURL]];

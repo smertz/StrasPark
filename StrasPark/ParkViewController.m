@@ -99,19 +99,53 @@ NSString* AnnotationIdentifier = @"AnnotationIdentifier";
 
 - (IBAction) directionToPark: (id)sender
 {
-    NSMutableArray *items = [NSMutableArray new];
-    MKMapItem *item = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(self.park.latitude, self.park.longitude)
-                                                                                 addressDictionary:nil]];
-    item.name = [NSString stringWithFormat:@"Parking %@", self.park.nom];
-    [items addObject:item];
-    //[items addObject:[MKMapItem mapItemForCurrentLocation]];
-    [MKMapItem openMapsWithItems:items
-                   launchOptions:[NSDictionary dictionaryWithObjectsAndKeys:MKLaunchOptionsDirectionsModeKey, MKLaunchOptionsDirectionsModeDriving, nil]];
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]]) {
+        UIAlertView *servicesDisabledAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Itinéraire", @"")
+                                                                        message:NSLocalizedString(@"Quelle application utiliser ?", @"")
+                                                                       delegate:self
+                                                              cancelButtonTitle:NSLocalizedString(@"Non merci", @"")
+                                                              otherButtonTitles:NSLocalizedString(@"Maps", @""), @"Google Maps", nil];
+        [servicesDisabledAlert show];
+    } else {
+        [self alertView:nil clickedButtonAtIndex:0];
+    }
 }
 
 - (void)refreshPark:(NSNotification *)notif {
     assert([NSThread isMainThread]);
     [self refreshDisplay];
+}
+
+#pragma mark -
+#pragma mark UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 1:
+        {
+            NSMutableArray *items = [NSMutableArray new];
+            MKMapItem *item = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(self.park.latitude, self.park.longitude)
+                                                                                         addressDictionary:nil]];
+            item.name = [NSString stringWithFormat:@"Parking %@", self.park.nom];
+            [items addObject:item];
+            //[items addObject:[MKMapItem mapItemForCurrentLocation]];
+            [MKMapItem openMapsWithItems:items
+                           launchOptions:[NSDictionary dictionaryWithObjectsAndKeys:MKLaunchOptionsDirectionsModeKey, MKLaunchOptionsDirectionsModeDriving, nil]];
+        }
+            break;
+            
+        case 2:
+        {
+            NSString *url = [NSString stringWithFormat:@"comgooglemaps://?daddr=%f,%f&zoom=17&directionsmode=driving", self.park.latitude, self.park.longitude];
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark -

@@ -42,7 +42,6 @@
 		08A22300171CAFFA004F2027 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08A222FF171CAFFA004F2027 /* SystemConfiguration.framework */; };
 		08A22302171CB359004F2027 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08A22301171CB359004F2027 /* StoreKit.framework */; };
 		08A22304171CB394004F2027 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08A22303171CB394004F2027 /* AdSupport.framework */; };
-		08BE49B61715D9860029B4B7 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08BE49B51715D9860029B4B7 /* Storyboard.storyboard */; };
 		08E201C51719F94F00AB02FC /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 08E201C31719F94F00AB02FC /* Icon.png */; };
 		08E201C61719F94F00AB02FC /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08E201C41719F94F00AB02FC /* Icon@2x.png */; };
 		08F5CAA91714ACEE0060B2A6 /* arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 08F5CAA51714ACEE0060B2A6 /* arrow_down.png */; };
@@ -123,7 +122,6 @@
 		08A222FF171CAFFA004F2027 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		08A22301171CB359004F2027 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		08A22303171CB394004F2027 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
-		08BE49B51715D9860029B4B7 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		08E201C31719F94F00AB02FC /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		08E201C41719F94F00AB02FC /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		08F5CAA51714ACEE0060B2A6 /* arrow_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_down.png; sourceTree = "<group>"; };
@@ -274,7 +272,6 @@
 				08335B11171098E000F48267 /* RootView.xib */,
 				0803FD8417119E14002105AF /* ParkView.xib */,
 				08775FF817135F5C002D6F16 /* carto.plist */,
-				08BE49B51715D9860029B4B7 /* Storyboard.storyboard */,
 			);
 			name = Resources;
 			path = StrasPark;
@@ -385,7 +382,6 @@
 				08F5CAAA1714ACEE0060B2A6 /* arrow_down@2x.png in Resources */,
 				08F5CAAB1714ACEE0060B2A6 /* arrow_up.png in Resources */,
 				08F5CAAC1714ACEE0060B2A6 /* arrow_up@2x.png in Resources */,
-				08BE49B61715D9860029B4B7 /* Storyboard.storyboard in Resources */,
 				08E201C51719F94F00AB02FC /* Icon.png in Resources */,
 				08E201C61719F94F00AB02FC /* Icon@2x.png in Resources */,
 				08A222ED1719FE6E004F2027 /* LICENSE in Resources */,
@@ -497,7 +493,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Stephan Mertz (9E6463PX4V)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -531,7 +527,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Stephan Mertz";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -540,7 +536,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "D3752141-D617-4230-9EC3-4A7EC82693C7";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

@@ -93,7 +93,7 @@ NSString *kAlphaKey = nil;
 - (void) startUpdatingLocation
 {
     // Create the location manager if this object does not already have one.
-    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
         if (nil == self.locationManager)
             self.locationManager = [[CLLocationManager alloc] init];
     
